@@ -62,7 +62,7 @@ const CalendarComponent: React.FC = () => {
 
   const calendarRef = useRef<typeof Calendar>(null);
 
-  const handleDateChange: CalendarProps['onChange'] = (value) => {
+  const handleDateChange: CalendarProps['onChange'] = value => {
     if (value instanceof Date) {
       setDate(value);
     } else if (Array.isArray(value) && value[0] instanceof Date) {
@@ -89,7 +89,9 @@ const CalendarComponent: React.FC = () => {
         <EventList>
           <h4>Events for {formattedDate}</h4>
           {events[formattedDate] ? (
-            events[formattedDate].map((event, index) => <li key={index}>{event}</li>)
+            events[formattedDate].map((event, index) => (
+              <li key={index}>{event}</li>
+            ))
           ) : (
             <li>No events</li>
           )}

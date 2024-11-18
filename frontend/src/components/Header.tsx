@@ -67,7 +67,9 @@ const Header = () => {
             <HeaderDropdownMenu>
               <HeaderDropdownLink to="/profile">Profile</HeaderDropdownLink>
               <HeaderDropdownLink to="/milestone">Milestone</HeaderDropdownLink>
-              <HeaderDropdownLink to="/certificates">Certificates</HeaderDropdownLink>
+              <HeaderDropdownLink to="/certificates">
+                Certificates
+              </HeaderDropdownLink>
               <HeaderDropdownLink to="/support">Support</HeaderDropdownLink>
               <HeaderDropdownLink to="/settings">Settings</HeaderDropdownLink>
               <HeaderLogoutButton onClick={handleLogout}>

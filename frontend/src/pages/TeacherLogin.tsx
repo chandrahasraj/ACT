@@ -12,7 +12,7 @@ import {
   TeacherOverlay,
   TeacherTitle,
   ForgotPasswordLink,
-  SignUpText
+  SignUpText,
 } from './styles/TeacherLoginStyles';
 
 const TeacherLogin: React.FC = () => {
@@ -21,16 +21,38 @@ const TeacherLogin: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleLogin = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    const user = users.find(
-      (user) =>
-        user.username === username &&
-        user.password === password &&
-        user.role === Roles.Teacher
-    );
-    if (user) {
-      login(user.username, Roles.Teacher);
+    // Construct API endpoint from environment variable
+    const apiUrl = `http://localhost:4000/login`;
+
+    // Call the backend API for login
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        // role: Roles.Teacher, // Send the selected role for validation (if needed)
+      }),
+    });
+
+    if (!response.ok) {
+      // Handle non-200 responses
+      const errorData = await response.json();
+      alert('Invalid credentials');
+      throw new Error(errorData.message || 'Invalid credentials');
+    }
+
+    // Extract data from response
+    const token = response.headers.get('authorization')?.split('Bearer')[1];
+    console.log(token);
+    if (token) {
+      login(username, Roles.Teacher, token);
       navigate('/dashboard');
     } else {
       alert('Invalid credentials');
@@ -46,21 +68,25 @@ const TeacherLogin: React.FC = () => {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setUsername(e.target.value)
+            }
             required
           />
           <TeacherLoginPassword
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
             required
           />
           <ForgotPasswordLink href="#">Forgot Password?</ForgotPasswordLink>
-          <TeacherLoginSubmit type="submit">
-            Login
-          </TeacherLoginSubmit>
-          <SignUpText>Don't have an account? <a href="#">Sign Up</a></SignUpText>
+          <TeacherLoginSubmit type="submit">Login</TeacherLoginSubmit>
+          <SignUpText>
+            Don't have an account? <a href="#">Sign Up</a>
+          </SignUpText>
         </TeacherLoginForm>
       </TeacherOverlay>
     </TeacherLoginContainer>

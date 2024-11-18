@@ -31,22 +31,34 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       {isOpen && (
         <SidebarNav>
           <SidebarNavItem>
-            <SidebarLink onClick={() => handleNavigation('/dashboard')}>Dashboard</SidebarLink>
+            <SidebarLink onClick={() => handleNavigation('/dashboard')}>
+              Dashboard
+            </SidebarLink>
           </SidebarNavItem>
           <SidebarNavItem>
-            <SidebarLink onClick={() => handleNavigation('/courses')}>Courses</SidebarLink>
+            <SidebarLink onClick={() => handleNavigation('/courses')}>
+              Courses
+            </SidebarLink>
           </SidebarNavItem>
           <SidebarNavItem>
-            <SidebarLink onClick={() => handleNavigation('/teams')}>Teams</SidebarLink>
+            <SidebarLink onClick={() => handleNavigation('/teams')}>
+              Teams
+            </SidebarLink>
           </SidebarNavItem>
           <SidebarNavItem>
-            <SidebarLink onClick={() => handleNavigation('/resources')}>Resources</SidebarLink>
+            <SidebarLink onClick={() => handleNavigation('/resources')}>
+              Resources
+            </SidebarLink>
           </SidebarNavItem>
           <SidebarNavItem>
-            <SidebarLink onClick={() => handleNavigation('/faq')}>FAQ</SidebarLink>
+            <SidebarLink onClick={() => handleNavigation('/faq')}>
+              FAQ
+            </SidebarLink>
           </SidebarNavItem>
           <SidebarNavItem>
-            <SidebarLink onClick={() => handleNavigation('/support')}>Support</SidebarLink>
+            <SidebarLink onClick={() => handleNavigation('/support')}>
+              Support
+            </SidebarLink>
           </SidebarNavItem>
         </SidebarNav>
       )}

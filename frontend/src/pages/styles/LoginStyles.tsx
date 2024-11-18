@@ -37,8 +37,11 @@ export const RoleOption = styled.div<RoleOptionProps>`
   cursor: pointer;
   border-radius: 8px;
   margin: 12px 0;
-  transition: background-color 0.3s, transform 0.3s;
-  border: ${({ isSelected }) => (isSelected ? '2px solid #0056b3' : '2px solid #007bff')};
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+  border: ${({ isSelected }) =>
+    isSelected ? '2px solid #0056b3' : '2px solid #007bff'};
 
   &:hover {
     background-color: #0056b3;
@@ -332,7 +335,7 @@ export const SuccessContainer = styled.div`
 
   h2 {
     font-size: 2rem;
-    color: #007BFF;
+    color: #007bff;
   }
 
   p {
@@ -342,7 +345,7 @@ export const SuccessContainer = styled.div`
   }
 
   a {
-    color: #007BFF;
+    color: #007bff;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -352,7 +355,7 @@ export const SuccessContainer = styled.div`
     padding: 10px 20px;
     font-size: 1rem;
     color: #fff;
-    background-color: #007BFF;
+    background-color: #007bff;
     border: none;
     border-radius: 5px;
     cursor: pointer;

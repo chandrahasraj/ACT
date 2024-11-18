@@ -18,10 +18,26 @@ import {
 
 const Courses: React.FC = () => {
   const [topics, setTopics] = useState([
-    { id: 1, name: 'Introduction to React', videoUrl: 'https://www.youtube.com/embed/Ke90Tje7VS0' },
-    { id: 2, name: 'React State Management', videoUrl: 'https://www.youtube.com/embed/35lXWvCuM8o' },
-    { id: 3, name: 'React Routing', videoUrl: 'https://www.youtube.com/embed/Law7wfdg_ls' },
-    { id: 4, name: 'Congratulations!', photoUrl: 'https://www.example.com/congratulations.jpg' },
+    {
+      id: 1,
+      name: 'Introduction to React',
+      videoUrl: 'https://www.youtube.com/embed/Ke90Tje7VS0',
+    },
+    {
+      id: 2,
+      name: 'React State Management',
+      videoUrl: 'https://www.youtube.com/embed/35lXWvCuM8o',
+    },
+    {
+      id: 3,
+      name: 'React Routing',
+      videoUrl: 'https://www.youtube.com/embed/Law7wfdg_ls',
+    },
+    {
+      id: 4,
+      name: 'Congratulations!',
+      photoUrl: 'https://www.example.com/congratulations.jpg',
+    },
   ]);
   const [currentTopic, setCurrentTopic] = useState<number | null>(null);
   const [completedTopics, setCompletedTopics] = useState<number[]>([]);
@@ -49,11 +65,14 @@ const Courses: React.FC = () => {
     setCurrentTopic(topicId);
   };
 
-  const currentTopicDetails = currentTopic !== null ? topics.find(topic => topic.id === currentTopic) : undefined;
+  const currentTopicDetails =
+    currentTopic !== null
+      ? topics.find(topic => topic.id === currentTopic)
+      : undefined;
 
   return (
     <>
-      <Header /> 
+      <Header />
       <DndProvider backend={HTML5Backend}>
         <Container>
           <TopicsColumn>
@@ -97,15 +116,24 @@ const Courses: React.FC = () => {
                     allowFullScreen
                   />
                   <button
-                    style={{ marginLeft: '10px', padding: '5px 10px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
-                    onClick={() => markComplete(currentTopicDetails.id)}
-                  >
+                    style={{
+                      marginLeft: '10px',
+                      padding: '5px 10px',
+                      backgroundColor: '#007bff',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => markComplete(currentTopicDetails.id)}>
                     Mark as Complete
                   </button>
                 </VideoContainer>
               )
             ) : (
-              <Placeholder>Please select a topic to view the content.</Placeholder>
+              <Placeholder>
+                Please select a topic to view the content.
+              </Placeholder>
             )}
           </ContentColumn>
         </Container>
