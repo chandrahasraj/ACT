@@ -30,7 +30,7 @@ services:
         DEV_PG_PASSWORD: ${DEV_PG_PASSWORD}
         PROFILE: ${PROFILE}
     ports:
-      - "4000:4000"
+      - "4000:8080"
     depends_on:
       - db
     environment:

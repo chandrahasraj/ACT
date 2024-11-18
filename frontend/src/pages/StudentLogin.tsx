@@ -10,7 +10,7 @@ import {
   StudentLoginPassword,
   StudentLoginSubmit,
   StudentOverlay,
-  StudentTitle
+  StudentTitle,
 } from './styles/StudentLoginStyles';
 
 const StudentLogin: React.FC = () => {
@@ -19,16 +19,38 @@ const StudentLogin: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleLogin = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    const user = users.find(
-      (user) =>
-        user.username === username &&
-        user.password === password &&
-        user.role === Roles.Student
-    );
-    if (user) {
-      login(user.username, Roles.Student);
+    // Construct API endpoint from environment variable
+    const apiUrl = `http://localhost:4000/login`;
+
+    // Call the backend API for login
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        // role: Roles.Student, // Send the selected role for validation (if needed)
+      }),
+    });
+
+    if (!response.ok) {
+      // Handle non-200 responses
+      const errorData = await response.json();
+      alert('Invalid credentials');
+      console.error('Error:', errorData.message);
+      throw new Error(errorData.message || 'Invalid credentials');
+    }
+
+    // Extract data from response
+    const token = response.headers.get('authorization')?.split('Bearer')[1];
+    if (token) {
+      login(username, Roles.Student, token);
       navigate('/dashboard');
     } else {
       alert('Invalid credentials');
@@ -44,19 +66,21 @@ const StudentLogin: React.FC = () => {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setUsername(e.target.value)
+            }
             required
           />
           <StudentLoginPassword
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
             required
           />
-          <StudentLoginSubmit type="submit">
-            Login
-          </StudentLoginSubmit>
+          <StudentLoginSubmit type="submit">Login</StudentLoginSubmit>
         </StudentLoginForm>
       </StudentOverlay>
     </StudentLoginContainer>

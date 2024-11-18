@@ -37,7 +37,7 @@ class UserController(
     }
 
     @GetMapping("/profile")
-    @PreAuthorize("hasAnyAuthority('STANDARD_USER', 'ADMIN_USER')")
+    @PreAuthorize("hasAnyAuthority('STANDARD_USER', 'PRIVILEGED_USER', 'ADMIN_USER')")
     @Suppress("MaximumLineLength")
     fun getProfile(): ResponseEntity<Any> {
         val principal =
@@ -47,7 +47,7 @@ class UserController(
     }
 
     @PostMapping("/update")
-    @PreAuthorize("hasAnyAuthority('STANDARD_USER', 'ADMIN_USER')")
+    @PreAuthorize("hasAnyAuthority('STANDARD_USER', 'PRIVILEGED_USER', 'ADMIN_USER')")
     fun update(
         @Valid @RequestBody userInput: UserInput,
     ): ResponseEntity<UserOutput> = ResponseEntity.ok(userService.update(userInput))

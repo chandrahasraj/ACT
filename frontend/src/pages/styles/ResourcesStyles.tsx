@@ -9,7 +9,8 @@ export const ResourceTable = styled.table`
   border-collapse: collapse;
   margin-top: 20px;
 
-  th, td {
+  th,
+  td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;

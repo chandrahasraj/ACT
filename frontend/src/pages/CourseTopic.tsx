@@ -21,7 +21,7 @@ interface CourseTopicProps {
   updateTopic: (index: number, field: string, value: string) => void;
   markComplete: (topicId: number) => void;
   completedTopics: number[];
-  onClick?: () => void; 
+  onClick?: () => void;
 }
 
 const CourseTopic: React.FC<CourseTopicProps> = ({
@@ -62,18 +62,15 @@ const CourseTopic: React.FC<CourseTopicProps> = ({
 
   return (
     <TopicItem ref={handleRef} onClick={onClick}>
-      <TickMark style={{ color: completedTopics.includes(topic.id) ? 'green' : 'black' }}>
+      <TickMark
+        style={{
+          color: completedTopics.includes(topic.id) ? 'green' : 'black',
+        }}>
         ✔
       </TickMark>
-      <TopicInput
-        type="text"
-        value={topic.name}
-        onChange={handleChange}
-      />
+      <TopicInput type="text" value={topic.name} onChange={handleChange} />
       {topic.id !== 4 && (
-        <MarkCompleteButton
-          onClick={() => markComplete(topic.id)}
-        >
+        <MarkCompleteButton onClick={() => markComplete(topic.id)}>
           Mark as Complete
         </MarkCompleteButton>
       )}

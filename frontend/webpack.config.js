@@ -5,67 +5,71 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const path = require('path');
-const fs = require('fs');
 
 module.exports = {
-  mode: prod ? 'production' : 'development',
-  entry: './src/index.tsx',
-  output: {
-    path: __dirname + '/dist/',
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        resolve: {
-          extensions: ['.ts', '.tsx', '.js', '.json'],
-        },
-        use: 'ts-loader',
-      },
-      {
-        test: /\.svg$/,
-        use: ['@svgr/webpack', 'url-loader'],
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      },
+    mode: prod ? 'production' : 'development',
+    entry: './src/index.tsx',
+    output: {
+        path: path.resolve(__dirname, 'build'), // Changed 'dist' to 'build'
+        filename: 'static/js/[name].[contenthash].js', // Better output filenames
+        publicPath: '/', // Ensures correct routing for React
+        clean: true, // Cleans the output directory before each build
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(ts|tsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'ts-loader',
+                },
+            },
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack', 'url-loader'],
+            },
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
+        ],
+    },
+    devtool: prod ? 'source-map' : 'inline-source-map',
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './public/index.html',
+            filename: 'index.html',
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'static/css/[name].[contenthash].css',
+        }),
+        new CopyPlugin({
+            patterns: [{ from: './public/assets', to: 'assets' }], // Copy assets to 'build/assets'
+        }),
     ],
-  },
-  devtool: prod ? undefined : 'source-map',
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    }),
-    new MiniCssExtractPlugin(),
-    new CopyPlugin({
-      patterns: [{ from: './public/assets', to: 'assets' }],
-    }),
-  ],
-  devServer: prod
-    ? undefined
-    : {
-        static: {
-          directory: path.join(__dirname, 'public'),
+    devServer: prod
+        ? undefined
+        : {
+            static: {
+                directory: path.join(__dirname, 'public'),
+            },
+            hot: true, // Enable hot module replacement
+            liveReload: true,
+            compress: true,
+            port: 3000,
+            historyApiFallback: true, // Enables React Router support
+            host: '0.0.0.0',
+            client: {
+                progress: true,
+                overlay: {
+                    errors: true,
+                    warnings: false,
+                },
+            },
+            open: true, // Automatically open in the browser
         },
-        hot: false,
-        liveReload: true,
-        compress: true,
-        port: 3000,
-        historyApiFallback: true,
-        host: '0.0.0.0',
-        client: {
-          progress: true,
-          overlay: {
-            errors: true,
-            warnings: false,
-          },
-        },
-        open: true,
-      },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
-    plugins: [new TsconfigPathsPlugin()],
-  },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.json'],
+        plugins: [new TsconfigPathsPlugin()],
+    },
 };
