@@ -25,43 +25,16 @@ const App = () => {
           <Route path="/login/teacher" element={<TeacherLogin />} />
           <Route path="/login/student" element={<StudentLogin />} />
           <Route path="/admin" element={<AdminLogin />} />
-          <Route
-            path="/dashboard"
-            element={<ProtectedRoute element={<Dashboard />} />}
-          />
-          <Route
-            path="/courses"
-            element={<ProtectedRoute element={<Courses />} />}
-          />
-          <Route
-            path="/teams"
-            element={<ProtectedRoute element={<Teams />} />}
-          />
-          <Route
-            path="/resources"
-            element={<ProtectedRoute element={<Resources />} />}
-          />
+          <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+          <Route path="/courses" element={<ProtectedRoute element={<Courses />} />} />
+          <Route path="/teams" element={<ProtectedRoute element={<Teams />} />} />
+          <Route path="/resources" element={<ProtectedRoute element={<Resources />} />} />
           <Route path="/FAQ" element={<ProtectedRoute element={<FAQ />} />} />
-          <Route
-            path="/support"
-            element={<ProtectedRoute element={<Support />} />}
-          />
-          <Route
-            path="/profile"
-            element={<ProtectedRoute element={<Profile />} />}
-          />
-          <Route
-            path="/certificates"
-            element={<ProtectedRoute element={<Certificates />} />}
-          />
-          <Route
-            path="/milestone"
-            element={<ProtectedRoute element={<Milestone />} />}
-          />
-          <Route
-            path="/settings"
-            element={<ProtectedRoute element={<Settings />} />}
-          />
+          <Route path="/support" element={<ProtectedRoute element={<Support />} />} />
+          <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
+          <Route path="/certificates" element={<ProtectedRoute element={<Certificates />} />} />
+          <Route path="/milestone" element={<ProtectedRoute element={<Milestone />} />} />
+          <Route path="/settings" element={<ProtectedRoute element={<Settings />} />} />
         </Routes>
       </Router>
     </AuthProvider>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Roles } from '../models/Roles';
 import { users } from '../dummyLoginData';
@@ -10,7 +10,7 @@ import {
   StudentLoginPassword,
   StudentLoginSubmit,
   StudentOverlay,
-  StudentTitle,
+  StudentTitle
 } from './styles/StudentLoginStyles';
 
 const StudentLogin: React.FC = () => {
@@ -22,7 +22,7 @@ const StudentLogin: React.FC = () => {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const user = users.find(
-      user =>
+      (user) =>
         user.username === username &&
         user.password === password &&
         user.role === Roles.Student
@@ -44,21 +44,19 @@ const StudentLogin: React.FC = () => {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setUsername(e.target.value)
-            }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
             required
           />
           <StudentLoginPassword
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             required
           />
-          <StudentLoginSubmit type="submit">Login</StudentLoginSubmit>
+          <StudentLoginSubmit type="submit">
+            Login
+          </StudentLoginSubmit>
         </StudentLoginForm>
       </StudentOverlay>
     </StudentLoginContainer>

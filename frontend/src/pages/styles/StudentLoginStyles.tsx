@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-const backgroundImage =
-  'https://img.freepik.com/free-vector/background-realistic-abstract-technology-particle_23-2148431735.jpg?t=st=1724734277~exp=1724737877~hmac=96b4239f082ab4760a81ac4cad813e439f91bdfb8aa9775238d5169bba40eb2e&w=740';
+const backgroundImage = 'https://img.freepik.com/free-vector/background-realistic-abstract-technology-particle_23-2148431735.jpg?t=st=1724734277~exp=1724737877~hmac=96b4239f082ab4760a81ac4cad813e439f91bdfb8aa9775238d5169bba40eb2e&w=740';
 
 export const StudentLoginContainer = styled.div`
   display: flex;

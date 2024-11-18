@@ -23,12 +23,7 @@ import {
   SignUpLink,
   SuccessContainer,
 } from './styles/LoginStyles';
-import {
-  FaChalkboardTeacher,
-  FaUserGraduate,
-  FaEye,
-  FaEyeSlash,
-} from 'react-icons/fa';
+import { FaChalkboardTeacher, FaUserGraduate, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
@@ -45,10 +40,11 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+
   const [signupStep, setSignupStep] = useState(0);
   const [showSignup, setShowSignup] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [countdown, setCountdown] = useState(5);
+  const [showSuccess, setShowSuccess] = useState(false); 
+  const [countdown, setCountdown] = useState(5); 
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -60,9 +56,7 @@ const Login: React.FC = () => {
   const [passwordSignup, setPasswordSignup] = useState('');
   const [confirmPasswordSignup, setConfirmPasswordSignup] = useState('');
 
-  const [teamMembers, setTeamMembers] = useState([
-    { fullName: '', emailId: '' },
-  ]);
+  const [teamMembers, setTeamMembers] = useState([{ fullName: '', emailId: '' }]);
 
   const [mentorName, setMentorName] = useState('');
   const [mentorEmail, setMentorEmail] = useState('');
@@ -80,7 +74,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     const user = users.find(
-      user =>
+      (user) =>
         user.username === username &&
         user.password === password &&
         user.role === selectedRole
@@ -95,13 +89,11 @@ const Login: React.FC = () => {
   };
 
   const nextImage = () => {
-    setCurrentImageIndex(prevIndex => (prevIndex + 1) % images.length);
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex(
-      prevIndex => (prevIndex - 1 + images.length) % images.length
-    );
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
   useEffect(() => {
@@ -110,7 +102,7 @@ const Login: React.FC = () => {
       return () => clearTimeout(timer);
     } else if (showSuccess && countdown === 0) {
       window.location.reload();
-    }
+    } 
   }, [showSuccess, countdown, navigate]);
 
   useEffect(() => {
@@ -142,50 +134,17 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleSignupNext = async (e: FormEvent) => {
+  const handleSignupNext = (e: FormEvent) => {
     e.preventDefault();
     if (signupStep < 3) {
-      setSignupStep(prev => prev + 1);
+      setSignupStep((prev) => prev + 1);
     } else {
-      try {
-          const apiUrl = `${process.env.REACT_APP_API_URL}/user/signup`;
-        // Call the backend API for signup
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            firstName,
-            lastName,
-            institution,
-            email: emailSignup,
-            dob,
-            username: usernameSignup,
-            password: passwordSignup,
-            teamMembers,
-            mentorName,
-            mentorEmail,
-          }),
-        });
-
-        if (!response.ok) {
-          throw new Error('Signup failed. Please try again.');
-        }
-
-        const data = await response.json();
-        console.log('Signup successful:', data);
-
-        // Show success message
-        setShowSuccess(true);
-      } catch (error: any) {
-        alert(error.message);
-      }
+      setShowSuccess(true);
     }
   };
 
   const handleSignupBack = () => {
-    setSignupStep(prev => prev - 1);
+    setSignupStep((prev) => prev - 1);
   };
 
   const addTeamMember = () => {
@@ -196,11 +155,7 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleTeamMemberChange = (
-    index: number,
-    field: 'fullName' | 'emailId',
-    value: string
-  ) => {
+  const handleTeamMemberChange = (index: number, field: 'fullName' | 'emailId', value: string) => {
     const updatedTeamMembers = [...teamMembers];
     updatedTeamMembers[index][field] = value;
     setTeamMembers(updatedTeamMembers);
@@ -208,71 +163,72 @@ const Login: React.FC = () => {
 
   return (
     <LoginBaseContainer>
+      
+
       <LoginContent>
+
         {!showSignup && !showForgotPassword && !showSuccess && (
           <LoginContainer>
+          
             <Title>Login</Title>
-            {!selectedRole && (
-              <div className="role-selection">
-                <TeacherContainer
-                  onClick={() => handleRoleSelection('teacher')}
-                  isSelected={selectedRole === 'teacher'}>
-                  <FaChalkboardTeacher style={{ marginRight: '5px' }} />
-                  Teacher
-                </TeacherContainer>
-                <StudentContainer
-                  onClick={() => handleRoleSelection('student')}
-                  isSelected={selectedRole === 'student'}>
-                  <FaUserGraduate style={{ marginRight: '5px' }} />
-                  Student
-                </StudentContainer>
-              </div>
-            )}
+          {!selectedRole && (
+            <div className="role-selection">
+              <TeacherContainer
+                onClick={() => handleRoleSelection('teacher')}
+                isSelected={selectedRole === 'teacher'}
+              >
+                <FaChalkboardTeacher style={{ marginRight: '5px' }} />
+                Teacher
+              </TeacherContainer>
+              <StudentContainer
+                onClick={() => handleRoleSelection('student')}
+                isSelected={selectedRole === 'student'}
+              >
+                <FaUserGraduate style={{ marginRight: '5px' }} />
+                Student
+              </StudentContainer>
+            </div>
+          )}
             {selectedRole && (
-              <form onSubmit={handleLogin} className="login-form">
-                <FormLabel>Username</FormLabel>
+            <form onSubmit={handleLogin} className="login-form">
+              <FormLabel>Username</FormLabel>
+              <FormInput
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                required
+              />
+              <PasswordWrapper>
+                <FormLabel>Password</FormLabel>
                 <FormInput
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setUsername(e.target.value)
-                  }
+                  type={passwordVisible ? 'text' : 'password'}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                   required
                 />
-                <PasswordWrapper>
-                  <FormLabel>Password</FormLabel>
-                  <FormInput
-                    type={passwordVisible ? 'text' : 'password'}
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setPassword(e.target.value)
-                    }
-                    required
-                  />
-                  <EyeIcon onClick={togglePasswordVisibility}>
-                    {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-                  </EyeIcon>
-                </PasswordWrapper>
-                <ForgotPasswordLink onClick={() => setShowForgotPassword(true)}>
-                  Forgot Password?
-                </ForgotPasswordLink>
-                <FormButton type="submit">Login</FormButton>
-              </form>
-            )}
-            {selectedRole && (
-              <div className="footer-links">
-                <SignUpLink onClick={() => setShowSignup(true)}>
-                  Don't have an account? Sign Up
-                </SignUpLink>
-              </div>
-            )}
+                <EyeIcon onClick={togglePasswordVisibility}>
+                  {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+                </EyeIcon>
+              </PasswordWrapper>
+              <ForgotPasswordLink onClick={() => setShowForgotPassword(true)}>
+                Forgot Password?
+              </ForgotPasswordLink>
+              <FormButton type="submit">Login</FormButton>
+            </form>
+          )}
+          {selectedRole && (
+            <div className="footer-links">
+              <SignUpLink onClick={() => setShowSignup(true)}>Don't have an account? Sign Up</SignUpLink>
+            </div>
+          )}
           </LoginContainer>
         )}
 
         {showSignup && !showSuccess && (
           <LoginFormWrapper isVisible={showSignup}>
+
             {signupStep === 0 && (
               <>
                 <h2>Sign Up - Step 1</h2>
@@ -281,45 +237,35 @@ const Login: React.FC = () => {
                   <FormInput
                     type="text"
                     value={firstName}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setFirstName(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setFirstName(e.target.value)}
                     required
                   />
                   <FormLabel>Last Name</FormLabel>
                   <FormInput
                     type="text"
                     value={lastName}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setLastName(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setLastName(e.target.value)}
                     required
                   />
                   <FormLabel>Institution</FormLabel>
                   <FormInput
                     type="text"
                     value={institution}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setInstitution(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setInstitution(e.target.value)}
                     required
                   />
                   <FormLabel>Email</FormLabel>
                   <FormInput
                     type="email"
                     value={emailSignup}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setEmailSignup(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmailSignup(e.target.value)}
                     required
                   />
                   <FormLabel>Date of Birth</FormLabel>
                   <FormInput
                     type="date"
                     value={dob}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setDob(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setDob(e.target.value)}
                     required
                   />
                   <FormButton type="submit">Next</FormButton>
@@ -335,33 +281,25 @@ const Login: React.FC = () => {
                   <FormInput
                     type="text"
                     value={usernameSignup}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setUsernameSignup(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setUsernameSignup(e.target.value)}
                     required
                   />
                   <FormLabel>Password</FormLabel>
                   <FormInput
                     type="password"
                     value={passwordSignup}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setPasswordSignup(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPasswordSignup(e.target.value)}
                     required
                   />
                   <FormLabel>Confirm Password</FormLabel>
                   <FormInput
                     type="password"
                     value={confirmPasswordSignup}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setConfirmPasswordSignup(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPasswordSignup(e.target.value)}
                     required
                   />
                   <FormButton type="submit">Next</FormButton>
-                  <FormButton type="button" onClick={handleSignupBack}>
-                    Back
-                  </FormButton>
+                  <FormButton type="button" onClick={handleSignupBack}>Back</FormButton>
                 </form>
               </>
             )}
@@ -376,25 +314,13 @@ const Login: React.FC = () => {
                       <FormInput
                         type="text"
                         value={member.fullName}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleTeamMemberChange(
-                            index,
-                            'fullName',
-                            e.target.value
-                          )
-                        }
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleTeamMemberChange(index, 'fullName', e.target.value)}
                       />
                       <FormLabel>Team Member {index + 1} - Email</FormLabel>
                       <FormInput
                         type="email"
                         value={member.emailId}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleTeamMemberChange(
-                            index,
-                            'emailId',
-                            e.target.value
-                          )
-                        }
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => handleTeamMemberChange(index, 'emailId', e.target.value)}
                       />
                     </div>
                   ))}
@@ -402,9 +328,7 @@ const Login: React.FC = () => {
                     Add Team Member
                   </FormButton>
                   <FormButton type="submit">Next</FormButton>
-                  <FormButton type="button" onClick={handleSignupBack}>
-                    Back
-                  </FormButton>
+                  <FormButton type="button" onClick={handleSignupBack}>Back</FormButton>
                 </form>
               </>
             )}
@@ -412,38 +336,32 @@ const Login: React.FC = () => {
             {signupStep === 3 && (
               <>
                 <h2>Sign Up - Step 4</h2>
-                <form
-                  onSubmit={e => {
-                    e.preventDefault();
-                    setShowSuccess(true);
-                  }}>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  setShowSuccess(true);
+                }}>
                   <FormLabel>Mentor Name</FormLabel>
                   <FormInput
                     type="text"
                     value={mentorName}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setMentorName(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setMentorName(e.target.value)}
                     required
                   />
                   <FormLabel>Mentor Email</FormLabel>
                   <FormInput
                     type="email"
                     value={mentorEmail}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setMentorEmail(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setMentorEmail(e.target.value)}
                     required
                   />
                   <FormButton type="submit">Finish</FormButton>
-                  <FormButton type="button" onClick={handleSignupBack}>
-                    Back
-                  </FormButton>
+                  <FormButton type="button" onClick={handleSignupBack}>Back</FormButton>
                 </form>
               </>
             )}
           </LoginFormWrapper>
         )}
+
 
         {showForgotPassword && !showSuccess && (
           <LoginFormWrapper isVisible={showForgotPassword}>
@@ -456,9 +374,7 @@ const Login: React.FC = () => {
                     type="email"
                     placeholder="Enter your email"
                     value={email}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setEmail(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
                     required
                   />
                   <FormButton type="submit">Submit</FormButton>
@@ -474,9 +390,7 @@ const Login: React.FC = () => {
                     type="text"
                     placeholder="Enter the code sent to your email"
                     value={verificationCode}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setVerificationCode(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setVerificationCode(e.target.value)}
                     required
                   />
                   <FormButton type="submit">Verify</FormButton>
@@ -492,9 +406,7 @@ const Login: React.FC = () => {
                     type="password"
                     placeholder="Enter your new password"
                     value={newPassword}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setNewPassword(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
                     required
                   />
                   <FormLabel>Confirm Password</FormLabel>
@@ -502,9 +414,7 @@ const Login: React.FC = () => {
                     type="password"
                     placeholder="Confirm your new password"
                     value={confirmPassword}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setConfirmPassword(e.target.value)
-                    }
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
                     required
                   />
                   <FormButton type="submit">Reset Password</FormButton>
@@ -519,11 +429,7 @@ const Login: React.FC = () => {
             <p>Your account setup/reset is complete.</p>
             <p>Redirecting to the login page in {countdown} seconds...</p>
             <p>
-              Or click{' '}
-              <a href="/" onClick={() => window.location.reload()}>
-                here
-              </a>{' '}
-              to go now.
+              Or click <a href="/" onClick={() => window.location.reload()}>here</a> to go now.
             </p>
           </SuccessContainer>
         )}
