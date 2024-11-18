@@ -1,0 +1,89 @@
+version: '3.8'
+services:
+  frontend:
+    container_name: frontend
+    image: upshift/frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    environment:
+      REACT_APP_API_URL: http://backend:4000/api/v1/
+
+  backend:
+    container_name: backend
+    image: upshift/backend:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        PROD_DB_URL: ${PROD_DB_URL}
+        DEV_DB_URL: ${DEV_DB_URL}
+        PROD_PG_USER: ${PROD_PG_USER}
+        DEV_PG_USER: ${DEV_PG_USER}
+        PROD_PG_PASSWORD: ${PROD_PG_PASSWORD}
+        DEV_PG_PASSWORD: ${DEV_PG_PASSWORD}
+        PROFILE: ${PROFILE}
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    environment:
+      PROD_DB_URL: jdbc:postgresql://db:5432/mydatabase
+      DEV_DB_URL: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+      PROD_PG_USER: cvvnk
+      DEV_PG_USER: cvvnk
+      PROD_PG_PASSWORD: secret
+      DEV_PG_PASSWORD: secret
+      PROFILE: production
+    volumes:
+      - gradle-cache:/home/gradle/.gradle # Cache Gradle dependencies
+    networks:
+      - app-network
+
+  db:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: cvvnk
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+#  prometheus:
+#    image: prom/prometheus:v2.44.0
+#    container_name: prometheus
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ./backend/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+#    networks:
+#      - app-network
+#
+#  grafana:
+#    image: grafana/grafana:9.5.2
+#    container_name: grafana
+#    ports:
+#      - "5000:5000"
+#    restart: unless-stopped
+#    volumes:
+#      - ./backend/monitoring/grafana/datasources.yml:/etc/grafana/provisioning/datasources.yml
+#    networks:
+#      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  postgres_data: {}
+  gradle-cache: {}
