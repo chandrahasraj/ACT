@@ -9,7 +9,7 @@ import Profile from './pages/Profile';
 import Milestone from './pages/Milestone';
 import Settings from './pages/Settings';
 import Certificates from './pages/Certificates';
-import Login from './pages/Login';
+import Login from './pages/authorization/Login';
 import TeacherLogin from './pages/TeacherLogin';
 import StudentLogin from './pages/StudentLogin';
 import AdminLogin from './pages/AdminLogin';

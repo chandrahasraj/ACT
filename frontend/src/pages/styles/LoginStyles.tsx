@@ -55,6 +55,11 @@ export const LoginFormWrapper = styled.div<LoginFormWrapperProps>`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  position: absolute; /* Ensures consistent positioning */
+  top: 50%; /* Centers vertically */
+  left: 50%; /* Centers horizontally */
+  transform: translate(-50%, -50%); /* Centers the modal */
   width: 100%;
   max-width: 400px;
   padding: 20px;
@@ -67,6 +72,8 @@ export const FormLabel = styled.label`
   color: #000;
   font-weight: bold;
   margin-bottom: 5px;
+  text-align: left;
+  width: 100%;
 `;
 
 export const FormInput = styled.input`
@@ -134,7 +141,7 @@ export const EyeIcon = styled.div`
   position: absolute;
   right: 15px;
   top: 50%;
-  transform: translateY(0%);
+  transform: translateY(-50%);
   cursor: pointer;
   font-size: 20px;
   color: #000;
@@ -148,37 +155,27 @@ export const LoginBaseContainer = styled.div`
   display: flex;
   height: 100vh;
   width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
-export const ImageSliderWrapper = styled.div`
-  flex: 1;
+export const LoginContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  overflow: hidden;
+  width: 100%;
+  padding: 40px;
+  background-color: #f0f0f0;
 
   @media (max-width: 768px) {
-    display: none;
+    padding: 20px;
   }
-`;
-
-export const BackgroundImage = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-
-export const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.5s ease;
 `;
 
 export const Title = styled.h2`
@@ -186,139 +183,6 @@ export const Title = styled.h2`
   margin-bottom: 20px;
   font-family: 'Arial', sans-serif;
   font-size: 24px;
-`;
-
-export const LoginContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
-
-export const LoginContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
-  padding: 40px;
-  width: 100%;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    padding: 20px;
-  }
-`;
-
-export const ForgotPasswordWrapper = styled.div`
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-`;
-
-export const ForgotPasswordTitle = styled.h3`
-  color: #000;
-  font-size: 20px;
-  margin-bottom: 20px;
-`;
-
-export const ForgotPasswordInput = styled.input`
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #000;
-  border-radius: 5px;
-  font-size: 16px;
-`;
-
-// export const ContinueButton = styled(FormButton)`
-//   max-width: 100%;
-// `;
-
-export const SliderButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  color: #fff;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  border-radius: 50%;
-
-  &:hover {
-    color: #007bff;
-  }
-
-  &:first-of-type {
-    left: 10px;
-  }
-
-  &:last-of-type {
-    right: 10px;
-  }
-`;
-
-export const CongratulationsPageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  background-color: #e0ffe0;
-  padding: 20px;
-`;
-
-export const CongratulationsMessage = styled.h2`
-  font-size: 28px;
-  color: #28a745;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-  font-family: 'Arial', sans-serif;
-`;
-
-export const CongratulationsDetails = styled.p`
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 40px;
-  text-align: center;
-  line-height: 1.5;
-`;
-
-export const ContinueButton = styled.button`
-  padding: 12px 24px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-
-  &:active {
-    background-color: #003a75;
-  }
-`;
-
-export const ConfettiWrapper = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
 `;
 
 export const SuccessContainer = styled.div`
@@ -360,4 +224,67 @@ export const SuccessContainer = styled.div`
     border-radius: 5px;
     cursor: pointer;
   }
+`;
+
+export const ImageSliderWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const BackgroundImage = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+
+export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s ease;
+`;
+
+export const SliderButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+
+  &:hover {
+    color: #007bff;
+  }
+
+  &:first-of-type {
+    left: 10px;
+  }
+
+  &:last-of-type {
+    right: 10px;
+  }
+`;
+
+export const LoginContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
