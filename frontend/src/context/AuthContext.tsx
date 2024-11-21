@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     // Interval to check inactivity
     const intervalId = setInterval(() => {
       if (Date.now() - lastActivityTime > INACTIVITY_TIMEOUT) {
-        console.log('User inactive, logging out');
+        // console.log('User inactive, logging out');
         logout();
       }
     }, 1000);
@@ -78,7 +78,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.setItem('username', username);
     localStorage.setItem('role', role);
     setIsAuthenticated(true);
-    console.log('Logged in:', { username, role });
+    // console.log('Logged in:', { username, role });
   };
 
   // Logout function
@@ -88,7 +88,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     localStorage.removeItem('username');
     localStorage.removeItem('role');
     setIsAuthenticated(false);
-    console.log('Logged out');
+    // console.log('Logged out');
   };
 
   // Validate token function
@@ -96,22 +96,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const token = localStorage.getItem('authToken');
     const expirationTime = localStorage.getItem('authTokenExpiration');
 
-    console.log('Token in localStorage:', token);
-    console.log('Expiration Time in localStorage:', expirationTime);
+    // console.log('Token in localStorage:', token);
+    // console.log('Expiration Time in localStorage:', expirationTime);
 
     if (token && expirationTime) {
       const now = Date.now();
       const expiry = parseInt(expirationTime, 10);
       if (now < expiry) {
-        console.log('Token is valid');
+        // console.log('Token is valid');
         return true;
       } else {
-        console.log('Token expired, logging out');
+        // console.log('Token expired, logging out');
         logout();
         return false;
       }
     } else {
-      console.log('No token found, logging out');
+      // console.log('No token found, logging out');
       logout();
       return false;
     }

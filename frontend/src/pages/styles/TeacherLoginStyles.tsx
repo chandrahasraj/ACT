@@ -47,17 +47,6 @@ export const TeacherLoginPassword = styled.input`
   border-radius: 5px;
 `;
 
-export const ForgotPasswordLink = styled.a`
-  margin-bottom: 15px;
-  color: #007bff;
-  cursor: pointer;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 export const TeacherLoginSubmit = styled.button`
   padding: 10px;
   background-color: #007bff;

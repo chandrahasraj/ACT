@@ -8,22 +8,37 @@ interface LoginFormWrapperProps {
   isVisible: boolean;
 }
 
-export const LoginScreenWrapper = styled.div`
+export const AppContainer = styled.div`
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  background-color: #f5f5f5; /* Light gray background for outer area */
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100%;
-  background-color: #f5f5f5;
+  align-items: center; /* Center AppWrapper vertically */
+  justify-content: center; /* Center AppWrapper horizontally */
+  overflow: hidden; /* Prevent scrollbars if content overflows */
 `;
 
-export const RoleSelectionWrapper = styled.div`
+export const AppWrapper = styled.div`
+  width: 100%;
+  max-width: 1500px; /* Optional: Maximum width for smaller screens */
+  margin: 0 auto; /* Center the wrapper horizontally */
+  height: 100%; /* Full height to stretch to the screen */
+  background-color: #ffffff; /* Focused white background */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional shadow for focus */
+  border-radius: 10px; /* Optional rounded corners */
+  padding: 20px; /* Space inside the wrapper */
+  box-sizing: border-box;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
+
+  @media (min-width: 1500px) {
+    width: 75%; /* Restrict to 75% width only on screens larger than 1500px */
+  }
+
+  @media (max-width: 768px) {
+    width: 90%; /* For smaller screens, make it 90% */
+  }
 `;
 
 export const RoleOption = styled.div<RoleOptionProps>`
@@ -66,45 +81,6 @@ export const LoginFormWrapper = styled.div<LoginFormWrapperProps>`
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-`;
-
-export const FormLabel = styled.label`
-  color: #000;
-  font-weight: bold;
-  margin-bottom: 5px;
-  text-align: left;
-  width: 100%;
-`;
-
-export const FormInput = styled.input`
-  width: 100%;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #000;
-  font-size: 16px;
-  box-sizing: border-box;
-`;
-
-export const FormButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  margin-top: 20px;
-  border-radius: 5px;
-  border: 2px solid #000;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-
-  &:active {
-    background-color: #003a75;
-  }
 `;
 
 export const ForgotPasswordLink = styled.a`
@@ -151,40 +127,6 @@ export const EyeIcon = styled.div`
   }
 `;
 
-export const LoginBaseContainer = styled.div`
-  display: flex;
-  height: 100vh;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-export const LoginContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 40px;
-  background-color: #f0f0f0;
-
-  @media (max-width: 768px) {
-    padding: 20px;
-  }
-`;
-
-export const Title = styled.h2`
-  color: #000;
-  margin-bottom: 20px;
-  font-family: 'Arial', sans-serif;
-  font-size: 24px;
-`;
-
 export const SuccessContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -226,59 +168,163 @@ export const SuccessContainer = styled.div`
   }
 `;
 
-export const ImageSliderWrapper = styled.div`
-  flex: 1;
+export const ParentGridWithTwoColumns = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 40%; /* Second column occupies 25% of the screen */
+  height: 100vh; /* Full viewport height */
+  width: 100%; /* Full viewport width */
+`;
+
+export const LoginBaseContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  grid-column: span 1; /* Occupies one column */
+  height: 100%; /* Ensures it stretches to the full height of the column */
+  width: 100%; /* Ensures it stretches to the full width of the column */
+  padding: 20px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+export const LogoWrapper = styled.div`
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 150px; /* Adjust logo size */
+    height: auto;
+    object-fit: contain;
+  }
+`;
+
+export const RoleGrid = styled.div`
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+`;
+
+export const RoleButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between buttons */
+  width: 100%;
+  max-width: 400px;
+`;
+
+export const RoleButton = styled.div<{
+  isMentor: boolean;
+}>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: ${({ isMentor }) => (isMentor ? '#003A75' : '#F5F5F5')};
+  color: ${({ isMentor }) => (isMentor ? '#ffffff' : '#333')};
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: ${({ isMentor }) => (isMentor ? '#0056b3' : '#e0e0e0')};
+  }
+
+  span {
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: ${({ isMentor }) => (isMentor ? '#d0d0d0' : '#666')};
+  }
+
+  svg {
+    font-size: 1.2rem;
+    color: ${({ isMentor }) => (isMentor ? '#ffffff' : '#333')};
+  }
+`;
+
+export const RoleGridBottom = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+`;
+export const ExploreButton = styled.button`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #003a75; /* Blue background */
+  border: none;
+  border-radius: 20px; /* Rounded corners */
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    background-color: #0056b3; /* Lighter blue on hover */
+    transform: scale(1.05); /* Slight scaling effect */
+  }
+
+  &:active {
+    background-color: #002a5e; /* Darker blue on click */
+    transform: scale(0.98); /* Slight shrink on click */
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 4px #0056b3; /* Focus outline */
+  }
+`;
+
+export const LoginContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  overflow: hidden;
+  width: 100%;
+  padding: 40px;
+  //background-color: #f0f0f0;
 
   @media (max-width: 768px) {
-    display: none;
+    padding: 20px;
   }
 `;
 
-export const BackgroundImage = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
-
-export const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.5s ease;
-`;
-
-export const SliderButton = styled.button`
+export const ContentWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  color: #fff;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  border-radius: 50%;
+  text-align: center;
+  width: 100%;
+`;
 
-  &:hover {
-    color: #007bff;
-  }
+export const ContentTitle = styled.h2`
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+`;
 
-  &:first-of-type {
-    left: 10px;
-  }
-
-  &:last-of-type {
-    right: 10px;
-  }
+export const ContentText = styled.p`
+  font-size: 1rem;
+  color: #f3f2f2;
+  margin-bottom: 20px;
 `;
 
 export const LoginContainer = styled.div`
@@ -287,4 +333,20 @@ export const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+`;
+
+export const LoginLinkWrapper = styled.div`
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;

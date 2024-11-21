@@ -11,7 +11,7 @@ import {
   AdminLoginSubmit,
   AdminOverlay,
   AdminTitle,
-} from './styles/AdminLoginStyles';
+} from './styles';
 
 const AdminLogin: React.FC = () => {
   const [username, setUsername] = useState<string>('');

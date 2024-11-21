@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { FormInput, FormButton } from '../styles/LoginStyles';
+import { FormInput, FormButton } from '../styles';
 
 interface ForgotPasswordProps {
   setShowForgotPassword: React.Dispatch<React.SetStateAction<boolean>>;

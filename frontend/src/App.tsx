@@ -15,56 +15,64 @@ import StudentLogin from './pages/StudentLogin';
 import AdminLogin from './pages/AdminLogin';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import { AppContainer, AppWrapper } from './pages/styles/LoginStyles';
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/login/teacher" element={<TeacherLogin />} />
-          <Route path="/login/student" element={<StudentLogin />} />
-          <Route path="/admin" element={<AdminLogin />} />
-          <Route
-            path="/dashboard"
-            element={<ProtectedRoute element={<Dashboard />} />}
-          />
-          <Route
-            path="/courses"
-            element={<ProtectedRoute element={<Courses />} />}
-          />
-          <Route
-            path="/teams"
-            element={<ProtectedRoute element={<Teams />} />}
-          />
-          <Route
-            path="/resources"
-            element={<ProtectedRoute element={<Resources />} />}
-          />
-          <Route path="/FAQ" element={<ProtectedRoute element={<FAQ />} />} />
-          <Route
-            path="/support"
-            element={<ProtectedRoute element={<Support />} />}
-          />
-          <Route
-            path="/profile"
-            element={<ProtectedRoute element={<Profile />} />}
-          />
-          <Route
-            path="/certificates"
-            element={<ProtectedRoute element={<Certificates />} />}
-          />
-          <Route
-            path="/milestone"
-            element={<ProtectedRoute element={<Milestone />} />}
-          />
-          <Route
-            path="/settings"
-            element={<ProtectedRoute element={<Settings />} />}
-          />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <AppContainer>
+      <AppWrapper>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/login/teacher" element={<TeacherLogin />} />
+              <Route path="/login/student" element={<StudentLogin />} />
+              <Route path="/admin" element={<AdminLogin />} />
+              <Route
+                path="/dashboard"
+                element={<ProtectedRoute element={<Dashboard />} />}
+              />
+              <Route
+                path="/courses"
+                element={<ProtectedRoute element={<Courses />} />}
+              />
+              <Route
+                path="/teams"
+                element={<ProtectedRoute element={<Teams />} />}
+              />
+              <Route
+                path="/resources"
+                element={<ProtectedRoute element={<Resources />} />}
+              />
+              <Route
+                path="/FAQ"
+                element={<ProtectedRoute element={<FAQ />} />}
+              />
+              <Route
+                path="/support"
+                element={<ProtectedRoute element={<Support />} />}
+              />
+              <Route
+                path="/profile"
+                element={<ProtectedRoute element={<Profile />} />}
+              />
+              <Route
+                path="/certificates"
+                element={<ProtectedRoute element={<Certificates />} />}
+              />
+              <Route
+                path="/milestone"
+                element={<ProtectedRoute element={<Milestone />} />}
+              />
+              <Route
+                path="/settings"
+                element={<ProtectedRoute element={<Settings />} />}
+              />
+            </Routes>
+          </Router>
+        </AuthProvider>
+      </AppWrapper>
+    </AppContainer>
   );
 };
 

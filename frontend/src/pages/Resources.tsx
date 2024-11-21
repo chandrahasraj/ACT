@@ -5,7 +5,7 @@ import {
   ViewButton,
   CloseButton,
   ResourceFrame,
-} from './styles/ResourcesStyles';
+} from './styles';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 

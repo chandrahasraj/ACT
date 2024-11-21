@@ -20,7 +20,7 @@ import {
   DashboardTeamProgressContainer,
   DashboardTeamProgressRow,
   DashboardTh,
-} from './styles/DashboardStyles';
+} from './styles';
 import { useAuth } from '../context/AuthContext';
 
 const Dashboard = () => {

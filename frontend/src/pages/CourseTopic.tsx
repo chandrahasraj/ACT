@@ -5,7 +5,7 @@ import {
   TickMark,
   TopicInput,
   MarkCompleteButton,
-} from './styles/CoursesStyles';
+} from './styles';
 
 interface Topic {
   id: number;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { FaqPageContainer } from './styles/FAQStyles';
+import { FaqPageContainer } from './styles';
 
 const FaqPage = () => {
   const faqData = [

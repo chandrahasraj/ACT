@@ -4,18 +4,27 @@ import { useAuth } from '../../context/AuthContext';
 import {
   LoginBaseContainer,
   LoginContent,
-  Title,
+  LargeTitle,
   LoginContainer,
-  TeacherContainer,
-  StudentContainer,
   FormInput,
   FormButton,
   ForgotPasswordLink,
   SignUpLink,
-} from '../styles/LoginStyles';
+  ParentGridWithTwoColumns,
+  LogoWrapper,
+  MediumTitle,
+  RoleButtonContainer,
+  RoleButton,
+  RoleGrid,
+  RoleGridBottom,
+  ExploreButton,
+} from '../styles';
 import { FaChalkboardTeacher, FaUserGraduate } from 'react-icons/fa';
-import Signup from './Signup';
+import SignupFlow from './SignupFlow';
 import ForgotPassword from './ForgotPassword';
+import { Roles } from '../../models/Roles';
+import AuthFlowImages from './AuthorizationFlowContent';
+import logo from '../../assets/upshift_logo.png';
 
 const Login: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
@@ -30,8 +39,7 @@ const Login: React.FC = () => {
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
-    const role =
-      selectedRole === 'student' ? 'STANDARD_USER' : 'PRIVILEGED_USER';
+    const role = selectedRole === Roles.Student ? Roles.Student : Roles.Mentor;
     const apiUrl = `http://localhost:4000/login`;
 
     try {
@@ -59,63 +67,90 @@ const Login: React.FC = () => {
     }
   };
 
-  if (showSignup) return <Signup setShowSignup={setShowSignup} />;
+  if (showSignup)
+    return (
+      <SignupFlow
+        setShowSignup={setShowSignup}
+        setSelectedRole={setSelectedRole}
+      />
+    );
   if (showForgotPassword)
     return <ForgotPassword setShowForgotPassword={setShowForgotPassword} />;
 
   return (
-    <LoginBaseContainer>
-      <LoginContent>
-        <LoginContainer>
-          <Title>Login</Title>
-          {!selectedRole && (
-            <div className="role-selection">
-              <TeacherContainer
-                onClick={() => setSelectedRole('teacher')}
-                isSelected={selectedRole === 'teacher'}>
-                <FaChalkboardTeacher style={{ marginRight: '5px' }} />
-                Teacher
-              </TeacherContainer>
-              <StudentContainer
-                onClick={() => setSelectedRole('student')}
-                isSelected={selectedRole === 'student'}>
-                <FaUserGraduate style={{ marginRight: '5px' }} />
-                Student
-              </StudentContainer>
-            </div>
-          )}
-          {selectedRole && (
-            <form onSubmit={handleLogin}>
-              <FormInput
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setUsername(e.target.value)
-                }
-                required
-              />
-              <FormInput
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setPassword(e.target.value)
-                }
-                required
-              />
-              <ForgotPasswordLink onClick={() => setShowForgotPassword(true)}>
-                Forgot Password?
-              </ForgotPasswordLink>
-              <FormButton type="submit">Login</FormButton>
-              <SignUpLink onClick={() => setShowSignup(true)}>
-                Don't have an account? Sign Up
-              </SignUpLink>
-            </form>
-          )}
-        </LoginContainer>
-      </LoginContent>
-    </LoginBaseContainer>
+    <ParentGridWithTwoColumns>
+      <LoginBaseContainer>
+        <LogoWrapper>
+          <img src={logo} alt="Logo" />
+        </LogoWrapper>
+        <LoginContent>
+          <LoginContainer>
+            <LargeTitle>Welcome to UpShift !</LargeTitle>
+            <MediumTitle>Upshifting careers one course at a time</MediumTitle>
+            {!selectedRole && (
+              <RoleGrid>
+                <RoleButtonContainer>
+                  <RoleButton
+                    isMentor={false}
+                    onClick={() => setSelectedRole(Roles.Student)}>
+                    <div>
+                      Student
+                      <br />
+                      <span>Access the students' portal here.</span>
+                    </div>
+                    <FaUserGraduate />
+                  </RoleButton>
+                  <RoleButton
+                    isMentor={true}
+                    onClick={() => setSelectedRole(Roles.Mentor)}>
+                    <div>
+                      Mentor
+                      <br />
+                      <span>Exclusive to mentors or staff only.</span>
+                    </div>
+                    <FaChalkboardTeacher />
+                  </RoleButton>
+                </RoleButtonContainer>
+                <RoleGridBottom>
+                  <MediumTitle>Want to know more?</MediumTitle>
+                  <ExploreButton>Explore More</ExploreButton>
+                </RoleGridBottom>
+              </RoleGrid>
+            )}
+            {selectedRole && (
+              <form onSubmit={handleLogin}>
+                <FormInput
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setUsername(e.target.value)
+                  }
+                  required
+                />
+                <FormInput
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
+                  required
+                />
+                <ForgotPasswordLink onClick={() => setShowForgotPassword(true)}>
+                  Forgot Password?
+                </ForgotPasswordLink>
+                <FormButton type="submit">Login</FormButton>
+                <SignUpLink onClick={() => setShowSignup(true)}>
+                  Don't have an account? Sign Up
+                </SignUpLink>
+              </form>
+            )}
+          </LoginContainer>
+        </LoginContent>
+      </LoginBaseContainer>
+      <AuthFlowImages />
+    </ParentGridWithTwoColumns>
   );
 };
 

@@ -13,7 +13,7 @@ import {
   TeacherTitle,
   ForgotPasswordLink,
   SignUpText,
-} from './styles/TeacherLoginStyles';
+} from './styles';
 
 const TeacherLogin: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -52,7 +52,7 @@ const TeacherLogin: React.FC = () => {
     const token = response.headers.get('authorization')?.split('Bearer')[1];
     console.log(token);
     if (token) {
-      login(username, Roles.Teacher, token);
+      login(username, Roles.Mentor, token);
       navigate('/dashboard');
     } else {
       alert('Invalid credentials');
