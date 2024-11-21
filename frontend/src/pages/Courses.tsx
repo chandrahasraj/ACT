@@ -14,7 +14,7 @@ import {
   CongratulationsContainer,
   CongratulationsImage,
   Placeholder,
-} from './styles/CoursesStyles';
+} from './styles';
 
 const Courses: React.FC = () => {
   const [topics, setTopics] = useState([

@@ -11,7 +11,7 @@ import {
   StudentLoginSubmit,
   StudentOverlay,
   StudentTitle,
-} from './styles/StudentLoginStyles';
+} from './styles';
 
 const StudentLogin: React.FC = () => {
   const [username, setUsername] = useState<string>('');
